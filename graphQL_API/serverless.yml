@@ -1,8 +1,11 @@
-service: SETrackerApi
+service: gqlAPI
 
 provider:
   name: aws
   runtime: nodejs12.x
+  environment:
+    TOKEN_SECRET: test
+    RABBIT_URI: amqp://admin:adminpass@ec2-52-207-231-70.compute-1.amazonaws.com:5672
   apiGateway:
     shouldStartNameWithService: true
 

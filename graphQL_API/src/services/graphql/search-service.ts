@@ -12,7 +12,6 @@ export default new ApolloServer({
     const header = event.headers.authorization || event.headers.Authorization || "";
     let token = header.split(" ")[1];
     let decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
-
     // add the user to the context
     return { decodedToken, token };
   },

@@ -5,49 +5,65 @@ db._connect();
 
 require("dotenv").config();
 
-module.exports.handler = (event, context, callback) => {
+module.exports.handler = async (event, context, callback) => {
   const body = JSON.parse(event.body);
   const { email, password } = body;
   //check if user exists
-  User.findOne({ email }).then((user: any) => {
-    if (user == null) {
-      const response = {
-        statusCode: 403,
-        body: "User not found",
-      };
+  const promise = new Promise((resolve, reject) => {
+    User.findOne({ email })
+      .then((user: any) => {
+        console.log(user);
+        if (user == null) {
+          const response = {
+            statusCode: 403,
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Credentials": true,
+            },
+            body: "User not found",
+          };
+          return resolve(response);
+        }
 
-      return callback(null, response);
-    }
+        if (user.passwordh == password) {
+          const token = jwt.sign(
+            {
+              data: {
+                id: user._id,
+                email,
+                name: user.name,
+                iat: Math.floor(Date.now() / 1000) - 30,
+              },
+            },
+            process.env.TOKEN_SECRET,
+            { expiresIn: "1h" }
+          );
 
-    if (user.passwordh == password) {
-      const token = jwt.sign(
-        {
-          data: {
-            id:user._id,
-            email,
-            name: user.name,
-            iat: Math.floor(Date.now() / 1000) - 30,
-          },
-        },
-        process.env.TOKEN_SECRET,
-        { expiresIn: "1h" }
-      );
-
-      const response = {
-        statusCode: 200,
-        body: JSON.stringify({
-          token,
-        }),
-      };
-
-      return callback(null, response);
-    } else {
-      const response = {
-        statusCode: 403,
-        body: "Invalid password",
-      };
-
-      return callback(null, response);
-    }
+          const response = {
+            statusCode: 200,
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Credentials": true,
+            },
+            body: JSON.stringify({
+              token,
+            }),
+          };
+          return resolve(response);
+        } else {
+          const response = {
+            statusCode: 403,
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Credentials": true,
+            },
+            body: "Invalid password",
+          };
+          return resolve(response);
+        }
+      })
+      .catch((e: any) => console.log(e));
   });
+
+  return await promise;
 };
