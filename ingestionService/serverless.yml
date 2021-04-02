@@ -1,0 +1,29 @@
+
+service: ingestionService
+
+frameworkVersion: '2'
+
+plugins:
+  - serverless-python-requirements
+custom:
+  pythonRequirements:
+    pythonBin: python3
+    dockerizePip: true
+    dockerImage: lambci/lambda:build-python3.8
+
+provider:
+  name: aws
+  runtime: python3.8
+  environment:
+    RABBIT_URI: amqp://admin:adminpass@ec2-52-207-231-70.compute-1.amazonaws.com:5672
+
+functions:
+  articleIngest:
+    runtime: python3.8
+    handler: articleIngestRabbit.main
+    events:
+     - http:
+         path: users/create
+         method: get
+
+

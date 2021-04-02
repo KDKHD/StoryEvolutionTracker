@@ -1,0 +1,22 @@
+import { UserProvider } from "./provider";
+
+export const resolvers = {
+  Query: {
+    user: async (_parent, args, { decodedToken }, info) => {
+      let x = await UserProvider.user(decodedToken.data.id);
+      x["bookmarksTemp"] = x["bookmarks"]
+      delete x["bookmarks"]
+      return x
+    },
+  },
+  User:{
+    bookmarks: async ({bookmarksTemp}, args, { decodedToken }, info) => {
+      return UserProvider.search.loadMany(Object.keys(bookmarksTemp))
+    },
+
+    notifications: async ({bookmarksTemp}, args, { decodedToken }, info) => {
+      return UserProvider.search.loadMany(Object.keys(bookmarksTemp).filter(key=>bookmarksTemp[key]>0))
+    },
+  }
+  
+};

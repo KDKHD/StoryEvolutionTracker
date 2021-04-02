@@ -1,0 +1,62 @@
+service: SETrackerApi
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  apiGateway:
+    shouldStartNameWithService: true
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+
+custom:
+  serverless-offline:
+    useChildProcesses: true
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    packager: 'npm'
+    includeModules: true
+
+package:
+  individually: true
+  exclude:
+    - .git/**
+    - tmp/**
+
+functions:
+  search:
+    handler: src/functions/search.handler
+    events:
+      - http:
+          path: search
+          method: post
+          cors: true
+      - http:
+          path: search
+          method: get
+          cors: true
+
+  login:
+    handler: src/functions/login.handler
+    events:
+      - http:
+          path: login
+          method: post
+          cors: true
+      - http:
+          path: login
+          method: get
+          cors: true
+
+  signup:
+    handler: src/functions/signUp.handler
+    events:
+      - http:
+          path: signUp
+          method: post
+          cors: true
+      - http:
+          path: signUp
+          method: get
+          cors: true

@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  custom_rabbitmq:
+    build: ./docker-rabbitmq
+    image: custom_rabbitmq
+    ports:
+      - "1883:1883"
+      - "5671:5671"
+      - "5672:5672"
+      - "15671:15671"
+      - "15672:15672"
+      - "15674:15674"
+      - "15675:15675"
+      - "25672:25672"
+      - "61613:61613"
+      - "15670:15670"
+
+  rabbitamazonforwarder:
+    image: airhelp/rabbit-amazon-forwarder
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./mapping.json:/config/mapping.json
+    environment:
+      MAPPING_FILE: /config/mapping.json
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: AKIA2E3YXCQLD6JZVKU5
+      AWS_SECRET_ACCESS_KEY: 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
+

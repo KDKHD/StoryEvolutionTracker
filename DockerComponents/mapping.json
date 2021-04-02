@@ -1,0 +1,62 @@
+[ 
+  {
+    "source" : {
+      "type" : "RabbitMQ",
+      "name" : "rabbitForwarderHandleSearchRabbit",
+      "connection" : "amqp://admin:adminpass@ec2-52-207-231-70.compute-1.amazonaws.com:5672",
+      "topic" : "amq.topic",
+      "queue" : "handleSearchRabbit",
+      "routingKeys" : ["#"]
+    },
+    "destination" : {
+      "type" : "Lambda",
+      "name" : "dorkingservice-dev-handlerSearchRabbit",
+      "target" : "arn:aws:lambda:us-east-1:785532407282:function:dorkingservice-dev-handlerSearchRabbit"
+    }
+  },
+  {
+    "source" : {
+      "type" : "RabbitMQ",
+      "name" : "rabbitForwarderComprehendServiceRabbit",
+      "connection" : "amqp://admin:adminpass@ec2-52-207-231-70.compute-1.amazonaws.com:5672",
+      "topic" : "amq.topic",
+      "queue" : "comprehendServiceRabbit",
+      "routingKeys" : ["#"]
+    },
+    "destination" : {
+      "type" : "Lambda",
+      "name" : "injestservice-dev-awscomprehendrabbit",
+      "target" : "arn:aws:lambda:us-east-1:785532407282:function:injestservice-dev-awscomprehendrabbit"
+    }
+  },
+  {
+    "source" : {
+      "type" : "RabbitMQ",
+      "name" : "rabbitForwarderIngestUrlArticleRabbit",
+      "connection" : "amqp://admin:adminpass@ec2-52-207-231-70.compute-1.amazonaws.com:5672",
+      "topic" : "amq.topic",
+      "queue" : "ingestUrlArticleRabbit",
+      "routingKeys" : ["#"]
+    },
+    "destination" : {
+      "type" : "Lambda",
+      "name" : "injestservice-dev-ingesturlarticlerabbit",
+      "target" : "arn:aws:lambda:us-east-1:785532407282:function:injestservice-dev-ingesturlarticlerabbit"
+    }
+  },
+  {
+    "source" : {
+      "type" : "RabbitMQ",
+      "name" : "rabbitForwarderUserServiceRabbit",
+      "connection" : "amqp://admin:adminpass@ec2-52-207-231-70.compute-1.amazonaws.com:5672",
+      "topic" : "amq.topic",
+      "queue" : "userServiceRabbit",
+      "routingKeys" : ["#"]
+    },
+    "destination" : {
+      "type" : "Lambda",
+      "name" : "userservice-dev-userServiceRabbit",
+      "target" : "arn:aws:lambda:us-east-1:785532407282:function:userservice-dev-userServiceRabbit"
+    }
+  }
+]
