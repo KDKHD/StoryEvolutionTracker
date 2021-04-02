@@ -2,7 +2,7 @@
   {
     "source" : {
       "type" : "RabbitMQ",
-      "name" : "rabbitForwarderHandleSearchRabbit",
+      "name" : "similarityService-dev-googleDork",
       "connection" : "amqp://admin:adminpass@ec2-52-207-231-70.compute-1.amazonaws.com:5672",
       "topic" : "amq.topic",
       "queue" : "handleSearchRabbit",
@@ -10,14 +10,14 @@
     },
     "destination" : {
       "type" : "Lambda",
-      "name" : "dorkingservice-dev-handlerSearchRabbit",
-      "target" : "arn:aws:lambda:us-east-1:785532407282:function:dorkingservice-dev-handlerSearchRabbit"
+      "name" : "similarityService-dev-googleDork",
+      "target" : "arn:aws:lambda:us-east-1:785532407282:function:similarityService-dev-googleDork"
     }
   },
   {
     "source" : {
       "type" : "RabbitMQ",
-      "name" : "rabbitForwarderComprehendServiceRabbit",
+      "name" : "analysisService-dev-keyphrase",
       "connection" : "amqp://admin:adminpass@ec2-52-207-231-70.compute-1.amazonaws.com:5672",
       "topic" : "amq.topic",
       "queue" : "comprehendServiceRabbit",
@@ -25,14 +25,14 @@
     },
     "destination" : {
       "type" : "Lambda",
-      "name" : "injestservice-dev-awscomprehendrabbit",
-      "target" : "arn:aws:lambda:us-east-1:785532407282:function:injestservice-dev-awscomprehendrabbit"
+      "name" : "analysisService-dev-keyphrase",
+      "target" : "arn:aws:lambda:us-east-1:785532407282:function:analysisService-dev-keyphrase"
     }
   },
   {
     "source" : {
       "type" : "RabbitMQ",
-      "name" : "rabbitForwarderIngestUrlArticleRabbit",
+      "name" : "ingestionService-dev-articleIngest",
       "connection" : "amqp://admin:adminpass@ec2-52-207-231-70.compute-1.amazonaws.com:5672",
       "topic" : "amq.topic",
       "queue" : "ingestUrlArticleRabbit",
@@ -40,14 +40,14 @@
     },
     "destination" : {
       "type" : "Lambda",
-      "name" : "injestservice-dev-ingesturlarticlerabbit",
-      "target" : "arn:aws:lambda:us-east-1:785532407282:function:injestservice-dev-ingesturlarticlerabbit"
+      "name" : "ingestionService-dev-articleIngest",
+      "target" : "arn:aws:lambda:us-east-1:785532407282:function:ingestionService-dev-articleIngest"
     }
   },
   {
     "source" : {
       "type" : "RabbitMQ",
-      "name" : "rabbitForwarderUserServiceRabbit",
+      "name" : "middlewareService-dev-userService",
       "connection" : "amqp://admin:adminpass@ec2-52-207-231-70.compute-1.amazonaws.com:5672",
       "topic" : "amq.topic",
       "queue" : "userServiceRabbit",
@@ -55,8 +55,8 @@
     },
     "destination" : {
       "type" : "Lambda",
-      "name" : "userservice-dev-userServiceRabbit",
-      "target" : "arn:aws:lambda:us-east-1:785532407282:function:userservice-dev-userServiceRabbit"
+      "name" : "middlewareService-dev-userService",
+      "target" : "arn:aws:lambda:us-east-1:785532407282:function:middlewareService-dev-userService"
     }
   }
 ]
