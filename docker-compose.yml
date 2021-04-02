@@ -3,7 +3,6 @@ version: '2'
 services:
   custom_rabbitmq:
     build: ./docker-rabbitmq
-    image: custom_rabbitmq
     ports:
       - "1883:1883"
       - "5671:5671"

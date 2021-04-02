@@ -3,8 +3,8 @@ import { gql as GQL } from "@apollo/client";
 import { default as apolloClient } from "../../util/apolloClient";
 
 const brokerURL = "ws://ec2-52-207-231-70.compute-1.amazonaws.com:15674/ws";
-const login = "admin4";
-const passcode = "Kenneth4";
+const login = "client";
+const passcode = "clientpass";
 
 const QUERY_ARTICLE = GQL`
     query Similar($url: String!){
