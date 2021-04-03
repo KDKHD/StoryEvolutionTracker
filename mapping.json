@@ -11,7 +11,7 @@
     "destination" : {
       "type" : "Lambda",
       "name" : "similarityService-dev-googleDork",
-      "target" : "arn:aws:lambda:us-east-1:697648485398:function:similarityService-dev-googleDork"
+      "target" : "arn:aws:lambda:us-east-1:785532407282:function:similarityService-dev-googleDork"
     }
   },
   {
@@ -26,7 +26,7 @@
     "destination" : {
       "type" : "Lambda",
       "name" : "analysisService-dev-keyphrase",
-      "target" : "arn:aws:lambda:us-east-1:697648485398:function:analysisService-dev-keyphrase"
+      "target" : "arn:aws:lambda:us-east-1:785532407282:function:analysisService-dev-keyphrase"
     }
   },
   {
@@ -41,7 +41,7 @@
     "destination" : {
       "type" : "Lambda",
       "name" : "ingestionService-dev-articleIngest",
-      "target" : "arn:aws:lambda:us-east-1:697648485398:function:ingestionService-dev-articleIngest"
+      "target" : "arn:aws:lambda:us-east-1:785532407282:function:ingestionService-dev-articleIngest"
     }
   },
   {
@@ -56,7 +56,7 @@
     "destination" : {
       "type" : "Lambda",
       "name" : "middlewareService-dev-userService",
-      "target" : "arn:aws:lambda:us-east-1:697648485398:function:middlewareService-dev-userService"
+      "target" : "arn:aws:lambda:us-east-1:785532407282:function:middlewareService-dev-userService"
     }
   }
 ]
