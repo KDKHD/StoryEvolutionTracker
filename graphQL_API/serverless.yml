@@ -21,11 +21,6 @@ custom:
     packager: 'npm'
     includeModules: true
 
-package:
-  individually: true
-  exclude:
-    - .git/**
-    - tmp/**
 
 functions:
   search:
@@ -34,11 +29,15 @@ functions:
       - http:
           path: search
           method: post
-          cors: true
+          cors:
+            origin: '*'
+            allowCredentials: true
       - http:
           path: search
           method: get
-          cors: true
+          cors:
+            origin: '*'
+            allowCredentials: true
 
   login:
     handler: src/functions/login.handler

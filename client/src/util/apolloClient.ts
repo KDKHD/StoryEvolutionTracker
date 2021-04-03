@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 
 const client = new ApolloClient({
   uri: "/dev/search",
-
+  
   // uri: process.env.API_DOMAIN! + process.env.API_ENDPOINT! + process.env.GRAPHQL_ENDPOINT!,
   cache: new InMemoryCache({
     addTypename: false,

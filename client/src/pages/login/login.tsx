@@ -82,7 +82,7 @@ const LoginPage = () => {
       body: raw,
     };
 
-    fetch("https://h5iyxee68b.execute-api.us-east-1.amazonaws.com/dev/signUp/", requestOptions)
+    fetch("/dev/signUp/", requestOptions)
       .then((response) => response.text())
       .then((result) => {
         const newToken = JSON.parse(result);
@@ -109,7 +109,7 @@ const LoginPage = () => {
       body: raw,
     };
 
-    fetch("https://h5iyxee68b.execute-api.us-east-1.amazonaws.com/dev/login/", requestOptions)
+    fetch("/dev/login/", requestOptions)
       .then((response) => {
         return response.text();
       })
