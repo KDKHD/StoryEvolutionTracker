@@ -1,12 +1,12 @@
 serverlessProject=('/graphQL_API' '/analysisService' '/ingestionService' '/middlewareService' '/similarityService')
 pids=('GRAPHQL_API' 'ANALYSISSERVICE' 'INGESTIONSERVICE' 'MIDDLEWARESERVICE' 'SIMILARITYSERVICE')
-
 ROOT=$(pwd)
+
 for i in "${!serverlessProject[@]}"
 do
   echo "Deploying ${serverlessProject[$i]}"
   cd "$ROOT${serverlessProject[$i]}"
-  sls deploy & 
+  sls deploy --force & 
 done
 
 wait

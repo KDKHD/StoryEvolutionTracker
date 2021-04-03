@@ -13,10 +13,11 @@ custom:
 
 provider:
   name: aws
-  runtime: python3.7
+  runtime: python3.8
   environment:
     RABBIT_URI: amqp://admin:adminpass@${file(../config.json):PUBLIC_IP}:5672
-    
+    MONGO_DB_URL: ${file(../config.json):MONGO_DB_URL}
+
 functions:
   googleDork:
     runtime: python3.7
