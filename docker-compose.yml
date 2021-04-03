@@ -1,8 +1,10 @@
 version: '2'
-
+  
 services:
+
   custom_rabbitmq:
     build: ./docker-rabbitmq
+    hostname: custom_rabbitmq
     ports:
       - "1883:1883"
       - "5671:5671"
@@ -14,6 +16,8 @@ services:
       - "25672:25672"
       - "61613:61613"
       - "15670:15670"
+    networks:
+      - resolute
 
   rabbitamazonforwarder:
     image: airhelp/rabbit-amazon-forwarder
@@ -26,4 +30,12 @@ services:
       AWS_REGION: us-east-1
       AWS_ACCESS_KEY_ID: AKIA2E3YXCQLD6JZVKU5
       AWS_SECRET_ACCESS_KEY: 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
+    networks:
+      - resolute
+    depends_on:
+      - custom_rabbitmq
 
+networks:
+  resolute:
+    external:
+      name: resolute
