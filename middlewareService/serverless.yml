@@ -16,8 +16,8 @@ provider:
   name: aws
   runtime: python3.8
   environment:
-    RABBIT_URI: amqp://admin:adminpass@ec2-52-207-231-70.compute-1.amazonaws.com:5672
-
+    RABBIT_URI: amqp://admin:adminpass@${file(../config.json):PUBLIC_IP}:5672
+    
 functions:
   userService:
     runtime: python3.7
