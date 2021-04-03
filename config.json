@@ -1,1 +1,4 @@
-{"PUBLIC_IP":"ddjd"}
+{
+  "PUBLIC_IP": "ec2-52-207-231-70.compute-1.amazonaws.com",
+  "MONGO_DB_URL": "mongodb+srv://dev:j16c8SXcLTlIty1R@cluster0.uwf3u.mongodb.net/articles?retryWrites=true&w=majority"
+}

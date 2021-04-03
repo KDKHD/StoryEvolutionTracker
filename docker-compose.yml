@@ -2,6 +2,13 @@ version: '2'
   
 services:
 
+  client:
+    build: ./client
+    ports:
+      - "3000:80"
+    volumes:
+      - './client:/app'
+
   custom_rabbitmq:
     build: ./docker-rabbitmq
     hostname: custom_rabbitmq

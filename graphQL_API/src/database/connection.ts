@@ -1,5 +1,8 @@
 import { connect } from "mongoose";
 
+const MONGO_DB_URL= process.env.MONGO_DB_URL
+
+
 class Database {
   constructor() {
     this._connect();
@@ -7,7 +10,7 @@ class Database {
 
   async _connect() {
     try {
-      await connect(`mongodb+srv://dev:j16c8SXcLTlIty1R@cluster0.uwf3u.mongodb.net/articles?authSource=admin&replicaSet=atlas-tcrrsf-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true`, { useNewUrlParser: true, useUnifiedTopology: true });
+      await connect(MONGO_DB_URL as string, { useNewUrlParser: true, useUnifiedTopology: true });
       require('./models/search');
 
       console.log("Database connection successful");

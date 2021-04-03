@@ -6,6 +6,8 @@ provider:
   environment:
     TOKEN_SECRET: test
     RABBIT_URI: amqp://admin:adminpass@${file(../config.json):PUBLIC_IP}:5672
+    MONGO_DB_URL: ${file(../config.json):MONGO_DB_URL}
+
     
   apiGateway:
     shouldStartNameWithService: true

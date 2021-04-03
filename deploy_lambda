@@ -2,19 +2,6 @@ serverlessProject=('/graphQL_API' '/analysisService' '/ingestionService' '/middl
 pids=('GRAPHQL_API' 'ANALYSISSERVICE' 'INGESTIONSERVICE' 'MIDDLEWARESERVICE' 'SIMILARITYSERVICE')
 ROOT=$(pwd)
 
-echo "Enter the public IP of the EC2 Instance (ENTER to not change)"
-read EC2IP
-
-if [ "$EC2IP" != "" ]
-then
-  JSON_STRING='{"PUBLIC_IP":"'"$EC2IP"'"}'
-  echo $JSON_STRING > config.json
-  echo "Updated CONFIG"
-
-else
-  echo "CONFIG unchanged"
-fi
-
 for i in "${!serverlessProject[@]}"
 do
   echo "Deploying ${serverlessProject[$i]}"
