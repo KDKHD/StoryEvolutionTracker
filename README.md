@@ -137,14 +137,7 @@ If you are using vim, the replace command is:
 :%s/<CURRENT ACCOUNT ID>/<YOUR ACCOUNT ID>/g
 ```
 
-12. **Start Docker Services:**
-```bash
-/deliverable:
-Docker-compose up
-```
-This will start the rabbit forwarding container as well as the custom rabbitMQ
-
-13. **Deploy Client APP:**
+12. **Deploy Client APP:**
 - Find the API endpoint for your serverless API. Go to AWS console lambdas, click ```gqlAPI-dev-search```, click ```API Gateway```, click ```Details``` and note down the domain (without /dev/...)
 - In ```/client/package``` replace the ```proxy``` value with the url noted in the previous step (make sure you have http:// and not https://)
 - Install packages and start the react server
@@ -153,8 +146,16 @@ This will start the rabbit forwarding container as well as the custom rabbitMQ
 /deliverable/client:
 npm i
 
-#Start server
-/deliverable/client:
-npm start
 ```
-- Navigate to ```http://<EC2 public IP>:3000```
+
+13. **Start Docker Services:**
+```bash
+/deliverable:
+Docker-compose up
+```
+This will start the rabbit forwarding container, custom rabbitMQ and React app
+
+14. **Done:**
+
+- Navigate to ```http://<EC2 public IP>```
+
