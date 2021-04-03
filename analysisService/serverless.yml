@@ -17,7 +17,7 @@ provider:
   runtime: python3.8
   environment:
     RABBIT_URI: amqp://admin:adminpass@${file(../config.json):PUBLIC_IP}:5672
-
+    
 functions:
   keyphrase:
     runtime: python3.8
