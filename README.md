@@ -140,13 +140,17 @@ If you are using vim, the replace command is:
 12. **Deploy Client APP:**
 - Find the API endpoint for your serverless API. Go to AWS console lambdas, click ```gqlAPI-dev-search```, click ```API Gateway```, click ```Details``` and note down the domain (without /dev/...)
 - In ```/client/package``` replace the ```proxy``` value with the url noted in the previous step (make sure you have http:// and not https://)
-- Install packages and start the react server
 ```bash
-#Install dependencies
-/deliverable/client:
-npm i
+/deliverable/client: 
+npm run build
 
+/deliverable/client: 
+npm install netlify-cli -g
+
+/deliverable/client: 
+netlify deploy
 ```
+
 
 13. **Start Docker Services:**
 ```bash
