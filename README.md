@@ -2,12 +2,12 @@
 ## Story Evolution Tracker
 
 
-###Overview
+### Overview
 Story evolution tracker is a an application that allows you to find related news at the click of a button. SET interprets a given news article, finds other related articles and builds a timeline of events.
 
 SET is the aggregation of a variety of different microservices deployed on AWS Lambda and EC2 for the purpose of scalability and maintainability. Services communicate using a RabbitMQ message broker. The following sections will describe how to deploy the services and get the system up and running. 
 
-###Requirements
+### Requirements
 - AWS EC2 Instance & Lambda
 - Node 10.13.0
 - Python 3.7
@@ -199,5 +199,10 @@ serve -s build
 
 
 ![Search Page](/images/search.png)
+
+
+### Authors
+
+* **Kenneth Kreindler** 
 
 
