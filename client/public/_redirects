@@ -1,0 +1,2 @@
+/dev/*  http://h5iyxee68b.execute-api.us-east-1.amazonaws.com/dev/:splat 200
+/*    /index.html   200

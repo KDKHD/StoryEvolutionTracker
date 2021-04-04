@@ -10,6 +10,8 @@ import {
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
+require('dotenv').config()
+
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -82,7 +84,7 @@ const LoginPage = () => {
       body: raw,
     };
 
-    fetch("/dev/signUp/", requestOptions)
+    fetch(`${process.env.REACT_APP_DOMAIN}/dev/signUp/`, requestOptions)
       .then((response) => response.text())
       .then((result) => {
         const newToken = JSON.parse(result);
@@ -109,7 +111,7 @@ const LoginPage = () => {
       body: raw,
     };
 
-    fetch("/dev/login/", requestOptions)
+    fetch(`${process.env.REACT_APP_DOMAIN}/dev/login/`, requestOptions)
       .then((response) => {
         return response.text();
       })
