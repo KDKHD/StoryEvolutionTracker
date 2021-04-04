@@ -4,8 +4,8 @@ import { default as apolloClient } from "../../util/apolloClient";
 require('dotenv').config()
 
 const brokerURL = `ws://${process.env.REACT_APP_EC2_PUBLIC}:15674/ws`;
-const login = process.env.REACT_RABBIT_USER;
-const passcode = process.env.REACT_RABBIT_PASS;
+const login = process.env.REACT_APP_RABBIT_USER;
+const passcode = process.env.REACT_APP_RABBIT_PASS;
 
 const QUERY_ARTICLE = GQL`
     query Similar($url: String!){
