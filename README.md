@@ -1,11 +1,22 @@
-# Story Evolution Tracker
+![Search Page](/images/banner.png)
+## Story Evolution Tracker
 
-## <a name="Installation"></a>How To Deploy
+
+###Overview
+Story evolution tracker is a an application that allows you to find related news at the click of a button. SET interprets a given news article, finds other related articles and builds a timeline of events.
+
+SET is the aggregation of a variety of different microservices deployed on AWS Lambda and EC2 for the purpose of scalability and maintainability. Services communicate using a RabbitMQ message broker. The following sections will describe how to deploy the services and get the system up and running. 
+
+###Requirements
+- AWS EC2 Instance & Lambda
+- Node 10.13.0
+- Python 3.7
+### <a name="Installation"></a>How To Deploy
 
 1. **Create or Login to an [AWS account](https://console.aws.amazon.com/)**
 
 2. **Create an EC2 Instance**
-- Type EC2 into the AWS console search bar and click on EC2
+- Type "EC2" into the AWS console search bar and click on EC2
 - Click on instances on the left navigation bar
 - Click the orange "Launch Instance" button
 - Select "Amazon Linux 2 AMI (HVM), SSD Volume Type"
@@ -56,7 +67,7 @@ nvm install 10.13.0
 #Activate 10.13.0
 nvm use 10.13.0
 ```
-This will install docker, docker-compose and git and ensure the permissions are correct.
+This will install docker, docker-compose, git and nvm and ensure the permissions and versions are correct.
 5. **Clone Repo:**
 ```bash
 git clone https://github.com/KDKHD/fypDeliverable.git
@@ -122,6 +133,8 @@ Get the public IP address of your EC2 instance handy. You will need it during de
 bash deploy_lambda
 ```
 Ensure your lambdas get deployed to Region us-east-1 (this should be the default so you do not need to worry). You can check this by going to your lambdas in the AWS console and checking in the top right.
+- You have to give your EC2 IAM user (arn for your EC2) permissions to execute all of the deployed lambdas. To do this, go to each lambda, configurations, permissions, add permissions and give your EC2 ARN invoke function permissions.
+- You also have to give the analysisService-dev-keyphrase function permission to access aws comprehend. To do this, find the IAM role associated with it, and attach the ComprehendFullAccess policy to it.
 
 11. **Config Mapping File**
 - Find your AWS account ID (by click on your username in the top right, and the string of numbers next to "My Account")
@@ -137,29 +150,14 @@ If you are using vim, the replace command is:
 :%s/<CURRENT ACCOUNT ID>/<YOUR ACCOUNT ID>/g
 ```
 
-12. **Deploy Client APP:**
-- Find the API endpoint for your serverless API. Go to AWS console lambdas, click ```gqlAPI-dev-search```, click ```API Gateway```, click ```Details``` and note down the domain (without /dev/...)
-- In ```/client/package``` replace the ```proxy``` value with the url noted in the previous step (make sure you have http:// and not https://)
-```bash
-/deliverable/client: 
-npm run build
-
-/deliverable/client: 
-npm install netlify-cli -g
-
-/deliverable/client: 
-netlify deploy
-```
-
-
-13. **Start Docker Services:**
+12. **Start Docker Services:**
 ```bash
 /deliverable:
 docker-compose up -d
 ```
 This will start the rabbit forwarding container and custom rabbitMQ.
 
-14. **ENV variable:**
+13. **ENV variable:**
 Set /client .env variable
 ```bash
 #Your API domain noted earlier
@@ -170,7 +168,8 @@ REACT_APP_EC2_PUBLIC=ec2-54-161-37-25.compute-1.amazonaws.com
 REACT_APP_RABBIT_USER=client
 REACT_APP_RABBIT_PASS=clientpass
 ```
-14. **Start Web App:**
+14. **Build and Start Web App:**
+(Building react on EC2 may fail due to resource limitations. If this is the case, perform these steps on a desktop)
 ```bash
 /deliverable:
 cd client
@@ -179,10 +178,12 @@ cd client
 /deliverable/client:
 npm i
 
+#Try build on EC2, else build on desktop and transfer built files
 #Build
 /deliverable/client:
 npm run build
 
+#Steps to perform on EC2
 #Install serve
 /deliverable/client:
 npm i -g serve
@@ -195,4 +196,8 @@ serve -s build
 15. **Done:**
 
 - Navigate to ```http://<EC2 public IP>:5000```
+
+
+![Search Page](/images/search.png)
+
 
