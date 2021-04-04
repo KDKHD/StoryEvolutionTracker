@@ -155,11 +155,30 @@ netlify deploy
 13. **Start Docker Services:**
 ```bash
 /deliverable:
-Docker-compose up
+docker-compose up -d
 ```
-This will start the rabbit forwarding container, custom rabbitMQ and React app
+This will start the rabbit forwarding container and custom rabbitMQ.
+
+
+14. **Start Web App:**
+```bash
+/deliverable:
+cd client
+
+#Build
+/deliverable/client:
+npm run build
+
+#Install serve
+/deliverable/client:
+npm i -g serve
+
+#Start server
+/deliverable/client:
+serve -s build
+```
 
 14. **Done:**
 
-- Navigate to ```http://<EC2 public IP>```
+- Navigate to ```http://<EC2 public IP>:5000```
 
