@@ -159,11 +159,25 @@ docker-compose up -d
 ```
 This will start the rabbit forwarding container and custom rabbitMQ.
 
-
+14. **ENV variable:**
+Set /client .env variable
+```bash
+#Your API domain noted earlier
+REACT_APP_DOMAIN=https://h5iyxee68b.execute-api.us-east-1.amazonaws.com
+# Your EC2 public IP. Ensure it does not have http:// and ending /
+REACT_APP_EC2_PUBLIC=ec2-54-161-37-25.compute-1.amazonaws.com
+# Leave these default
+REACT_APP_RABBIT_USER=client
+REACT_APP_RABBIT_PASS=clientpass
+```
 14. **Start Web App:**
 ```bash
 /deliverable:
 cd client
+
+#Install dependencies
+/deliverable/client:
+npm i
 
 #Build
 /deliverable/client:
@@ -178,7 +192,7 @@ npm i -g serve
 serve -s build
 ```
 
-14. **Done:**
+15. **Done:**
 
 - Navigate to ```http://<EC2 public IP>:5000```
 
