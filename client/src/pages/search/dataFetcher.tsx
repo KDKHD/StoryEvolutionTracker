@@ -1,10 +1,11 @@
 import { Client } from "@stomp/stompjs";
 import { gql as GQL } from "@apollo/client";
 import { default as apolloClient } from "../../util/apolloClient";
+require('dotenv').config()
 
-const brokerURL = "ws://ec2-52-207-231-70.compute-1.amazonaws.com:15674/ws";
-const login = "client";
-const passcode = "clientpass";
+const brokerURL = `ws://${process.env.REACT_APP_EC2_PUBLIC}:15674/ws`;
+const login = process.env.REACT_RABBIT_USER;
+const passcode = process.env.REACT_RABBIT_PASS;
 
 const QUERY_ARTICLE = GQL`
     query Similar($url: String!){
