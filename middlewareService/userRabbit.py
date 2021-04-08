@@ -5,7 +5,7 @@ from bson.objectid import ObjectId
 import hashlib
 import pymongo
 import pika
-
+from emailService import SendEmail
 
 rabbitUri = os.environ['RABBIT_URI'];
 
@@ -59,6 +59,9 @@ class UserService:
         if x.modified_count > 0:
             connection.user.update_one({"bookmarks.{}".format(str(objId)):{"$exists": "true"}},{"$inc":{"bookmarks.{}".format(str(objId)):x.modified_count}})
             #Send email
+            usersToNotify = connection.user.find({"bookmarks.{}".format(str(objId)):{"$exists": "true"}})
+            for document in usersToNotify:
+                SendEmail.send(document["email"])
         return objId 
 
     def processResults(self, event):

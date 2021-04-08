@@ -19,6 +19,8 @@ provider:
     RABBIT_URI: amqp://admin:adminpass@${file(../config.json):PUBLIC_IP}:5672
     MONGO_DB_URL: ${file(../config.json):MONGO_DB_URL}
     MONGO_DB_NAME: articles
+    EMAIL_SENDER: ${file(../config.json):EMAIL_SENDER}
+    AWS_REGION: ${file(../config.json):AWS_REGION}
     
 functions:
   userService:

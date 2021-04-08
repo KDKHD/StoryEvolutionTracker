@@ -1,3 +1,12 @@
+import unittest
+import os
+os.environ["RABBIT_URI"] = "amqp://admin:adminpass@${file(../config.json):PUBLIC_IP}:5672"
+os.environ["MONGO_DB_URL"] = "mongodb+srv://dev:j16c8SXcLTlIty1R@cluster0.uwf3u.mongodb.net/articles?retryWrites=true&w=majority"
+os.environ["MONGO_DB_NAME"] = "articles"
+os.environ["EMAIL_SENDER"] = "kdkhdyt@gmail.com"
+os.environ["AWS_REGION"] = "us-east-1"
+
+import userRabbit
 
 event = {
   "ingestUrlArticleRabbit": {
@@ -690,3 +699,15 @@ event = {
     }
   }
 }
+
+class TestEvent(unittest.TestCase):
+    
+    def test_event(self):
+        res = userRabbit.main(event, None)
+        self.assertTrue("ingestUrlArticleRabbit" in res)
+        self.assertTrue("handleSearchRabbit" in res)
+        self.assertTrue("uid" in res)
+        self.assertTrue("comprehendServiceRabbit" in res)
+
+if __name__ == '__main__':
+    unittest.main()
