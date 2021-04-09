@@ -32,6 +32,7 @@ class IngestUrlArticle:
     def __init__(self):
         pass
 
+    # Download and parse article
     def getArticle(self, url):
         print("Parsing article")
         article = Article(url)
@@ -49,6 +50,7 @@ class IngestUrlArticle:
             toReturn[key] = val
         return toReturn
 
+# Handle trigger event
 def main(eventMain, context):
     event = eventMain["ingestUrlArticleRabbit"]
     ia = IngestUrlArticle()
@@ -60,6 +62,7 @@ def main(eventMain, context):
         eventMain["comprehendServiceRabbit"]["article"] = toReturn
     return sentToNextQueue(eventMain)
 
+# Send to next queue if required
 def sentToNextQueue(event):
     print("sentToNextQueue")
     if "nextQueue" in event and len(event["nextQueue"]) > 0:

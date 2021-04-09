@@ -2,9 +2,10 @@ import boto3
 import os
 from botocore.exceptions import ClientError
 
-# Code from https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-using-sdk-python.html
+# Code adjusted from https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-using-sdk-python.html
 
 class SendEmail:
+    # Send notification to recipient
     def send(RECIPIENT):
 
         # Replace sender@example.com with your "From" address.

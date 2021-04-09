@@ -37,7 +37,7 @@ export class ArticleProvider {
     let payload = { bulkUrls: Array.isArray(urls) ? urls : [urls] };
 
     let params = {
-      FunctionName: "injestservice-dev-hello", // the lambda function we are going to invoke
+      FunctionName: "injestservice-dev-hello", 
       InvocationType: "RequestResponse",
       LogType: "Tail",
       Payload: JSON.stringify(payload),

@@ -72,44 +72,5 @@ const FetchData = async (
   return { queryUid, response: rabbitListener(queryUid), bookmarked };
 };
 
-// const FetchMore = (uid): Promise<any> => {
-//   return new Promise((resolve, reject) => {
-//     client.onConnect = function (frame) {
-//       client.publish({
-//         destination: "handleSearchRabbit",
-//         body: JSON.stringify({
-//           handleSearchRabbit: {
-//             keywords: [""],
-//             start: 10,
-//             num: 20,
-//           },
-//           nextQueue: ["replyQueue"],
-//         }),
-//       });
-//       // Do something, all subscribes must be done is this callback
-//       // This is needed because this will be executed after a (re)connect
-//       const callback = async function (message) {
-//         // called when the client receives a STOMP message from the server
-//         if (message.body) {
-//           let parsedMessage = JSON.parse(message.body);
-//           if (parsedMessage.uid === uid) {
-//             resolve(parsedMessage);
-//             await client.deactivate();
-//           }
-//         }
-//       };
-
-//       client.subscribe("replyQueue", callback, {
-//         "x-dead-letter-exchange": "replyQueue-dead-letter",
-//       });
-//     };
-
-//     client.onStompError = function (frame) {
-//       console.log("Broker reported error: " + frame.headers["message"]);
-//       console.log("Additional details: " + frame.body);
-//     };
-//     client.activate();
-//   });
-// };
 
 export { FetchData };

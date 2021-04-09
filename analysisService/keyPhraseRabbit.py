@@ -11,9 +11,11 @@ class AwsComprehend:
     def __init__(self):
         pass
 
+    #Bulk Comprehend URLS
     def comprehendUrls(self, urls):
         return [self.comprehendUrl(url) for url in urls]
 
+    # Comprehend individual URL
     def comprehendUrl(self, event):
         print("Comprehending")
         article = None
@@ -34,6 +36,7 @@ class AwsComprehend:
             link = article["canonical_link"]
         print(article)
         comprehend = self.comprehendText(" ".join([title, text])[:4000])
+        # Generate query string
         comprehend["KeyPhrases"] = sorted(
             comprehend["KeyPhrases"], key=lambda phrase: phrase["Score"])
         comprehend["SearchString"] = [title]+[*map(lambda phrase: phrase["Text"].replace(
@@ -48,13 +51,7 @@ class AwsComprehend:
         }
         return comprehend
 
-    def getArticle(self, url):
-        print("Parsing article")
-        article = Article(url)
-        article.download()
-        article.parse()
-        return article
-
+    #Comprehend text
     def comprehendText(self, text):
         print("Comprehending text")
         comprehend = boto3.client(
@@ -63,6 +60,7 @@ class AwsComprehend:
         return result
 
 
+# Process trigger event
 def main(eventMain, context):
     event = eventMain["comprehendServiceRabbit"]
     ac = AwsComprehend()
@@ -74,7 +72,7 @@ def main(eventMain, context):
         eventMain["handleSearchRabbit"]["keywords"] = toReturn["SearchString"]
     return sentToNextQueue(eventMain)
 
-
+# Add to next queue if needed
 def sentToNextQueue(event):
     print("sentToNextQueue")
     if "nextQueue" in event and len(event["nextQueue"]) > 0:
