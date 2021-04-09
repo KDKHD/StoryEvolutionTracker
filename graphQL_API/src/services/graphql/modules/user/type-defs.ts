@@ -17,7 +17,12 @@ export default gql`
     text: String
   }
 
+  type updateBookmarkRes {
+    state: Boolean
+  }
+
   extend type Query {
     user: User
+    updateBookmark(url: String, state:Boolean): updateBookmarkRes
   }
 `;

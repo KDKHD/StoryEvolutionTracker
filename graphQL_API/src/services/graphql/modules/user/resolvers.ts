@@ -9,6 +9,9 @@ export const resolvers = {
       delete x["bookmarks"]
       return x
     },
+    updateBookmark: async (_parent, {url, state}, { decodedToken }, info) => {
+      return UserProvider.updateBookmark(decodedToken.data.id, url, state);
+    },
   },
   User:{
     bookmarks: async ({bookmarksTemp}, args, { decodedToken }, info) => {
