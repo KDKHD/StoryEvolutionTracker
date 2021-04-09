@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import User from "../database/models/user";
 import db from "../database/connection";
+import { shake128 } from "js-sha3";
+
 db._connect();
 
 require("dotenv").config();
@@ -12,7 +14,6 @@ module.exports.handler = async (event, context, callback) => {
   const promise = new Promise((resolve, reject) => {
     User.findOne({ email })
       .then((user: any) => {
-        console.log(user);
         if (user == null) {
           const response = {
             statusCode: 403,
@@ -25,7 +26,7 @@ module.exports.handler = async (event, context, callback) => {
           return resolve(response);
         }
 
-        if (user.passwordh == password) {
+        if (user.passwordh == shake128(password, 256)) {
           const token = jwt.sign(
             {
               data: {

@@ -45,7 +45,6 @@ const Content: React.FC<ContentProps> = ({ resource, updateSearch }) => {
   const data = resource.read();
   const classes = useStyles();
   let history = useHistory();
-
   if (data.user.history.length == 0) {
     return (
       <List>
@@ -58,7 +57,7 @@ const Content: React.FC<ContentProps> = ({ resource, updateSearch }) => {
 
   return (
     <List>
-      {data.user.history.slice(10).map((bookmark: any, i: number) => (
+      {data.user.history.slice(-10).map((bookmark: any, i: number) => (
         <ListItem autoFocus button key={i}>
           <Box
             className={classes.listItem}

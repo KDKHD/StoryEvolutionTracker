@@ -1,6 +1,10 @@
 import jwt from "jsonwebtoken";
 import User from "../database/models/user";
 import db from "../database/connection";
+import { shake128 } from "js-sha3";
+
+const regex = new RegExp('(^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$)?(^(?=.*\d)(?=.*[a-z])(?=.*[@#$%^&+=]).*$)?(^(?=.*\d)(?=.*[A-Z])(?=.*[@#$%^&+=]).*$)?(^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$)?');
+
 db._connect();
 require("dotenv").config();
 
@@ -12,6 +16,15 @@ module.exports.handler = async (event, context, callback) => {
     const response = {
       statusCode: 403,
       body: "Passwords must match",
+    };
+
+    return response;
+  }
+
+  if(!regex.test(password1)){
+    const response = {
+      statusCode: 403,
+      body: "Passwords not secure enough",
     };
 
     return response;
@@ -30,7 +43,7 @@ module.exports.handler = async (event, context, callback) => {
       }
       //create new user
 
-      User.create({ email, passwordh: password1, name }).then((user) => {
+      User.create({ email, passwordh: shake128(password1, 256), name }).then((user) => {
         const token = jwt.sign(
           {
             data: {

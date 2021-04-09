@@ -180,9 +180,9 @@ const LoginPage = () => {
               </Button>
             </form>
             <Box className={classes.footer}>
-              <Box onClick={() => history.push("/resetPassword")}>
+              {/* <Box onClick={() => history.push("/resetPassword")}>
                 Forgot password?
-              </Box>
+              </Box> */}
               <Box onClick={() => setSignUp(true)}>Sign up</Box>
             </Box>
           </>

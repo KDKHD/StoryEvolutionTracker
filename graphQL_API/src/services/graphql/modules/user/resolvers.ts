@@ -5,7 +5,7 @@ export const resolvers = {
     user: async (_parent, args, { decodedToken }, info) => {
       let x = await UserProvider.user(decodedToken.data.id);
       if (x == null) return 
-      x["bookmarksTemp"] = x["bookmarks"]
+      x["bookmarksTemp"] = x["bookmarks"] || []
       delete x["bookmarks"]
       return x
     },
