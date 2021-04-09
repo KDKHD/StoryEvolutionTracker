@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-
+import { gql as GQL } from "@apollo/client";
 import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import { default as apolloClient } from "../util/apolloClient";
 
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
@@ -12,7 +13,16 @@ type Props = {
   value: String | undefined;
   onSubmit: (v: any) => void;
   bookmarked?: boolean | undefined;
+  setBookmarked: (v: boolean) => void;
 };
+
+const QUERY_BOOKMARKUPDATE = GQL`
+query update($url: String!, $state: Boolean!){
+  updateBookmark(url:$url, state: $state){
+   state
+ }
+ }
+`;
 
 const useStyles = makeStyles((theme) => ({
   searchBar: {
@@ -57,6 +67,15 @@ const SearchBar: React.FC<Props> = (props) => {
     window.addEventListener("scroll", handleScroll);
   });
 
+  const toggleBookmarked = async (state: boolean) => {
+    let data = apolloClient
+    .query({ query: QUERY_BOOKMARKUPDATE, variables: { url:props.value, state }, fetchPolicy: "no-cache" })
+    .then((res) => {
+      props.setBookmarked(res.data.updateBookmark.state);
+    });
+    props.setBookmarked(state);
+  };
+
   return (
     <>
       <Box
@@ -83,9 +102,13 @@ const SearchBar: React.FC<Props> = (props) => {
           }
         />
         {props.bookmarked == null ? null : props.bookmarked ? (
-          <BookmarkIcon />
+          <Box onClick={() => toggleBookmarked(false)}>
+            <BookmarkIcon />
+          </Box>
         ) : (
-          <BookmarkBorderIcon />
+          <Box onClick={() => toggleBookmarked(true)}>
+            <BookmarkBorderIcon />
+          </Box>
         )}
       </Box>
       <Box className={scrolled ? classes.spacer : ""} />

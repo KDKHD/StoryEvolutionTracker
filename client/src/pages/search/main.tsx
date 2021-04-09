@@ -71,6 +71,7 @@ const Main: React.FC<Props> = (props) => {
           value={value}
           setValue={setValue}
           bookmarked={bookmarked}
+          setBookmarked={setBookmarked}
         />
         <MainTable url={search} updateBookmarked={updateBookmarked}/>
       </Box>

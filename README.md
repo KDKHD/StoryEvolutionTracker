@@ -32,6 +32,9 @@ SET is the aggregation of a variety of different microservices deployed on AWS L
 
 4. **Configure Instance**
 ```bash
+#Change to root
+sudo su
+
 #Install git
 sudo yum install git -y
 
@@ -119,11 +122,13 @@ Create a MongoDB (Mongo atlas is recommended). Note down the connection uri for 
 mongodb+srv://<USER>:<PASSWORD>@<HOST>/articles?retryWrites=true&w=majority
 ```
 9. **Config Serverless Files**
-Edit ```/deliverables/config.json``` with your EC2 public IP and MongoDB uri. It should look like this:
+Edit ```/deliverables/config.json``` with your EC2 public IP, MongoDB uri, email (to send emails from) and AWS_REGION. It should look like this:
 ```json
 {
-  "PUBLIC_IP": "ec2-52-207-231-70.compute-1.amazonaws.com",
-  "MONGO_DB_URL": "mongodb+srv://<USER>:<PASSWORD>@<HOST>/articles?retryWrites=true&w=majority"
+  "EMAIL_SENDER": "kdkhdyt@gmail.com",
+  "AWS_REGION": "us-east-1",
+  "PUBLIC_IP": "54.161.37.25",
+  "MONGO_DB_URL": "mongodb+srv://dev:j16c8SXcLTlIty1R@cluster0.uwf3u.mongodb.net/articles?retryWrites=true&w=majority"
 }
 ```
 10. **Deploy Serverless Functions**
@@ -135,6 +140,7 @@ bash deploy_lambda
 Ensure your lambdas get deployed to Region us-east-1 (this should be the default so you do not need to worry). You can check this by going to your lambdas in the AWS console and checking in the top right.
 - You have to give your EC2 IAM user (arn for your EC2) permissions to execute all of the deployed lambdas. To do this, go to each lambda, configurations, permissions, add permissions and give your EC2 ARN invoke function permissions.
 - You also have to give the analysisService-dev-keyphrase function permission to access aws comprehend. To do this, find the IAM role associated with it, and attach the ComprehendFullAccess policy to it.
+- For email notifications to work, you must find the IAM role associated with your middleware functions and add the AmazonSESFullAccess policy to it. Furthermore, in SES you must verify your EMAIL_SENDER email from earlier.
 
 11. **Config Mapping File**
 - Find your AWS account ID (by click on your username in the top right, and the string of numbers next to "My Account")
@@ -160,7 +166,7 @@ This will start the rabbit forwarding container and custom rabbitMQ.
 13. **ENV variable:**
 Set /client .env variable
 ```bash
-#Your API domain noted earlier
+#Your API domain noted earlier (with https://)
 REACT_APP_DOMAIN=https://h5iyxee68b.execute-api.us-east-1.amazonaws.com
 # Your EC2 public IP. Ensure it does not have http:// and ending /
 REACT_APP_EC2_PUBLIC=ec2-54-161-37-25.compute-1.amazonaws.com
@@ -169,7 +175,6 @@ REACT_APP_RABBIT_USER=client
 REACT_APP_RABBIT_PASS=clientpass
 ```
 14. **Build and Start Web App:**
-(Building react on EC2 may fail due to resource limitations. If this is the case, perform these steps on a desktop)
 ```bash
 /deliverable:
 cd client
@@ -178,8 +183,11 @@ cd client
 /deliverable/client:
 npm i
 
-#Try build on EC2, else build on desktop and transfer built files
-#Build
+#May have to run this command on small instances
+NODE_OPTIONS=--max_old_space_size=800
+
+#Build may fail on small instances due to resource limitations. 
+#In this case build on a more powerful system and then transfer
 /deliverable/client:
 npm run build
 
